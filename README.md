@@ -1,45 +1,114 @@
-# equential
+# Equential
 
-### Local Development
-
-```bash
-uvicorn app.main:app --reload
-```
-
-### CLI Commands
-
-```bash
-python -m cli.manage create-user "user@example.com" "John Doe"
-```
-
-```bash
-python -m cli.manage delete-user "user@example.com"
-```
+A web application for running A/B tests and collecting user feedback on policy language.
 
 ## Deployment to DigitalOcean App Platform
 
-### MongoDB Atlas Setup
-1. Configure Network Access in Atlas
-   - Go to Network Access in Atlas
-   - Add IP Address
-   - For App Platform, you'll need to allow access from all IPs (0.0.0.0/0) as DO App Platform uses dynamic IPs
+### Prerequisites
 
-### App Platform Configuration
-1. Create a new app from your GitHub repo
-2. Environment Type: Python
-3. Set Environment Variables:
-   ```
-   MONGODB_URL=your-mongodb-atlas-url
-   BASE_URL=${APP_URL}  # App Platform automatically provides this
-   ```
-4. Build Command: `pip install -r requirements.txt`
-5. Run Command: `uvicorn app.main:app --host 0.0.0.0 --port ${PORT}`
+1. A DigitalOcean account
+2. Your code pushed to a GitHub repository
+3. MongoDB database (can be set up on MongoDB Atlas with a free tier)
 
-### Important Notes
-- App Platform will automatically:
-  - Provide HTTPS/SSL
-  - Handle process management
-  - Provide a domain (or you can configure your own)
-  - Auto-deploy on git push
-- The CLI tool is for local admin use only and won't be available on App Platform
-- Consider setting up CI/CD tests before deployment
+### Step-by-Step Deployment Instructions
+
+1. **Prepare Your Repository**
+   - Ensure your repository contains:
+     - `requirements.txt` with all Python dependencies
+     - `Procfile` with the command to run your FastAPI app: `web: uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}`
+     - Environment variables defined in your app
+
+2. **Set Up MongoDB**
+   - Create a MongoDB Atlas account if you don't have one
+   - Create a new cluster (free tier is sufficient)
+   - Create a database user and get your connection string
+   - Whitelist all IP addresses (0.0.0.0/0) for App Platform
+
+3. **Deploy to DigitalOcean**
+   1. Log in to your DigitalOcean account
+   2. Go to the App Platform section
+   3. Click "Create App"
+   4. Choose GitHub as your repository source
+   5. Select your repository
+   6. Select the branch you want to deploy
+   7. Select Python as the environment
+   8. Configure your app:
+      - Choose "Web Service" as the component type
+      - Set the run command: `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}`
+      - Add environment variables:
+        ```
+        MONGODB_URL=your_mongodb_connection_string
+        USERS_COLLECTION=users
+        ```
+   9. Click "Next"
+   10. Choose your plan (Basic plan is usually sufficient)
+   11. Click "Launch App"
+
+4. **Post-Deployment**
+   - Your app will be assigned a `.ondigitalocean.app` domain
+   - You can add a custom domain in the app settings if needed
+   - Set up automatic deployments from your repository
+
+### Environment Variables
+
+Make sure to set these environment variables in your DigitalOcean App:
+
+- `MONGODB_URL`: Your MongoDB connection string
+- `USERS_COLLECTION`: Name of your users collection (default: "users")
+
+### Monitoring and Maintenance
+
+- Monitor your app's performance in the DigitalOcean dashboard
+- View logs in the "Components" -> "Console" section
+- Set up alerts for any issues
+- Scale your app resources as needed in the settings
+
+### Troubleshooting
+
+Common issues and solutions:
+
+1. **App fails to start**
+   - Check the logs in the Console section
+   - Verify all environment variables are set correctly
+   - Ensure MongoDB connection string is correct and IP is whitelisted
+
+2. **Database connection issues**
+   - Check if MongoDB Atlas IP whitelist includes 0.0.0.0/0
+   - Verify connection string includes correct username/password
+   - Ensure database user has correct permissions
+
+3. **Static files not loading**
+   - Verify static files are included in your repository
+   - Check file permissions
+   - Ensure paths in your code are correct
+
+### Local Development
+
+To run the app locally:
+
+1. Clone the repository
+2. Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Set up environment variables in a `.env` file:
+   ```
+   MONGODB_URL=your_mongodb_connection_string
+   USERS_COLLECTION=users
+   ```
+5. Run the app:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+
+## Support
+
+For issues with deployment:
+1. Check DigitalOcean's status page
+2. Review app logs in the Console section
+3. Contact DigitalOcean support if needed
