@@ -1,0 +1,36 @@
+{
+    "name": "Example A/B Test",
+    "instructions": "For each example, choose the option that you think is more effective.",
+    "items": [
+        {
+            "content": "Which email subject line would make you more likely to open the email?",
+            "options": [
+                {
+                    "text": "Last chance - 24 hours left!",
+                    "category": "A"
+                },
+                {
+                    "text": "Limited time offer: Save 50% on your next purchase",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Which error message is more helpful?",
+            "options": [
+                {
+                    "text": "Error 404",
+                    "category": "A"
+                },
+                {
+                    "text": "The page you're looking for couldn't be found. Check the URL or return to the homepage.",
+                    "category": "B"
+                }
+            ]
+        }
+    ],
+    "category_descriptions": {
+        "A": "Short and direct",
+        "B": "Detailed and descriptive"
+    }
+} 

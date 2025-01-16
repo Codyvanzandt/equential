@@ -1,0 +1,140 @@
+{
+    "name": "Language Style Classification",
+    "instructions": "For each example, choose which option better matches the given criteria. Consider factors like formality, clarity, and professionalism.",
+    "items": [
+        {
+            "content": "Choose the more appropriate greeting:",
+            "options": [
+                {
+                    "text": "Hello there, how are you?",
+                    "category": "A"
+                },
+                {
+                    "text": "Greetings, I hope this message finds you well.",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the more appropriate time format:",
+            "options": [
+                {
+                    "text": "The meeting is at 3pm.",
+                    "category": "A"
+                },
+                {
+                    "text": "We will be convening at 15:00 hours.",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the more appropriate thank you message:",
+            "options": [
+                {
+                    "text": "Thanks for your help!",
+                    "category": "A"
+                },
+                {
+                    "text": "I appreciate your assistance.",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the more appropriate job inquiry:",
+            "options": [
+                {
+                    "text": "Hey! I saw your job posting and wanted to apply.",
+                    "category": "A"
+                },
+                {
+                    "text": "Dear Sir/Madam, I am writing to inquire about the position...",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the more appropriate casual greeting:",
+            "options": [
+                {
+                    "text": "Hey! What's up?",
+                    "category": "A"
+                },
+                {
+                    "text": "Good day to you.",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the more appropriate rejection message:",
+            "options": [
+                {
+                    "text": "Sorry, but we went with someone else.",
+                    "category": "A"
+                },
+                {
+                    "text": "I regret to inform you that your application was not successful.",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the clearer request:",
+            "options": [
+                {
+                    "text": "Can you pass me that thing?",
+                    "category": "A"
+                },
+                {
+                    "text": "Could you hand me the blue folder on your desk?",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the clearer deadline:",
+            "options": [
+                {
+                    "text": "Please submit the Q3 financial reports by Friday.",
+                    "category": "A"
+                },
+                {
+                    "text": "The Q3 financial reports are due by Friday, October 13th at 5pm EST.",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the clearer status update:",
+            "options": [
+                {
+                    "text": "They said it would be ready soon.",
+                    "category": "A"
+                },
+                {
+                    "text": "The development team estimates completion by next Tuesday.",
+                    "category": "B"
+                }
+            ]
+        },
+        {
+            "content": "Choose the clearer project deadline:",
+            "options": [
+                {
+                    "text": "Let's try to finish this soon.",
+                    "category": "A"
+                },
+                {
+                    "text": "The project deadline is October 15th at 5pm EST.",
+                    "category": "B"
+                }
+            ]
+        }
+    ],
+    "category_descriptions": {
+        "A": "Casual/Informal or Ambiguous",
+        "B": "Formal/Professional or Clear/Specific"
+    }
+} 

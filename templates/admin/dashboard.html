@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold">Experiments Dashboard</h1>
+        </div>
+
+        <!-- Create New Experiment -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-bold mb-4">Create New Experiment</h2>
+            <form action="/admin/{{ access_id }}/experiments/create" method="POST" enctype="multipart/form-data">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Experiment Configuration (JSON)</label>
+                        <input type="file" name="experiment_json" accept=".json" required
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700">
+                        <p class="mt-2 text-sm text-gray-600">
+                            Upload a JSON file containing the experiment configuration.
+                            <a href="/static/example_experiment.json" class="text-blue-500 hover:text-blue-700 mt-2 inline-block">
+                                View example format
+                            </a>
+                        </p>
+                    </div>
+                    <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Create Experiment
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Add this in the navigation area -->
+        <div class="mb-8">
+            <a href="/admin/{{ access_id }}/users" 
+               class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg block">
+                <h2 class="text-lg font-semibold">Manage Users</h2>
+                <p class="text-gray-600">View and create users, manage experiment access</p>
+            </a>
+        </div>
+
+        <!-- Experiments List -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">Existing Experiments</h2>
+            <div class="grid grid-cols-1 gap-4">
+                {% for experiment in experiments %}
+                <div class="border p-4 rounded">
+                    <h3 class="font-bold">{{ experiment.name }}</h3>
+                    <p class="text-gray-600">{{ experiment.user_instructions }}</p>
+                    <div class="mt-2 space-y-1">
+                        <p class="text-sm text-gray-500">Items: {{ experiment.items|length }}</p>
+                        <p class="text-sm text-gray-500">Categories: {{ experiment.categories|join(", ") }}</p>
+                    </div>
+                    <div class="mt-4 flex gap-2">
+                        <a href="/admin/{{ access_id }}/experiments/{{ experiment.id }}/results"
+                           class="text-blue-500 hover:text-blue-700">View Results</a>
+                        <a href="/admin/{{ access_id }}/experiments/{{ experiment.id }}/export"
+                           class="text-green-500 hover:text-green-700">Export Data</a>
+                        <form action="/admin/{{ access_id }}/experiments/{{ experiment.id }}/delete" method="POST" class="inline">
+                            <button type="submit" 
+                                    class="text-red-500 hover:text-red-700"
+                                    onclick="return confirm('Are you sure you want to delete this experiment?')">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

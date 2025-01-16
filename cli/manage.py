@@ -6,35 +6,23 @@ from app.config import get_settings
 
 app = typer.Typer()
 
-async def async_create_user(email: str, full_name: str):
-    await init_db()
-    user = await User.create_user(email=email, full_name=full_name)
-    return user
-
-async def async_delete_user(email: str):
-    await init_db()
-    user = await User.find_one({"email": email})
-    if user:
-        await user.delete()
-        return True
-    return False
-
 @app.command()
-def create_user(email: str, full_name: str):
-    """Create a new user and generate their access link"""
-    settings = get_settings()
-    user = asyncio.run(async_create_user(email, full_name))
-    typer.echo(f"User created successfully!")
-    typer.echo(f"Access link: {settings.base_url}/user/{user.access_id}")
+def create_admin(email: str, full_name: str):
+    """Create an admin user - this is the only CLI command we need to keep"""
+    async def _create():
+        await init_db()
+        user = await User.create_user(
+            email=email,
+            full_name=full_name,
+            is_admin=True
+        )
+        settings = get_settings()
+        return user, settings
 
-@app.command()
-def delete_user(email: str):
-    """Delete a user"""
-    success = asyncio.run(async_delete_user(email))
-    if success:
-        typer.echo(f"User {email} has been deleted")
-    else:
-        typer.echo(f"User {email} not found")
+    user, settings = asyncio.run(_create())
+    typer.echo(f"Admin user created successfully!")
+    typer.echo(f"Email: {user.email}")
+    typer.echo(f"Admin dashboard: {settings.base_url}/admin/{user.access_id}")
 
 if __name__ == "__main__":
     app() 

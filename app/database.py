@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
-from .models import User
+from .models import User, Experiment
 from .config import get_settings
 import logging
 
@@ -15,7 +15,7 @@ async def init_db():
         await client.server_info()
         await init_beanie(
             database=client[settings.database_name],
-            document_models=[User]
+            document_models=[User, Experiment]
         )
         logging.info("Successfully connected to MongoDB Atlas")
     except Exception as e:
